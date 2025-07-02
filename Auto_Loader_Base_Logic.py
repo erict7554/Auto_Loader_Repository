@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time
-
+print('Changes made to Auto_Loader_Base_Logic.py')
 # Set the GPIO mode to BCM
 GPIO.setmode(GPIO.BCM)
 
