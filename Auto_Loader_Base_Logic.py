@@ -9,6 +9,8 @@ GPIO.setup(17, GPIO.OUT)
 
 while True:
     GPIO.output(17, GPIO.HIGH)  # Turn on
+    print('Output is HIGH')
     time.sleep(5)
     GPIO.output(17, GPIO.LOW)   # Turn off
+    print('Output is LOW')
     time.sleep(5)
