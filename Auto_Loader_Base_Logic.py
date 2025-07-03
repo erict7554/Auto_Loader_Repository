@@ -1,16 +1,32 @@
-import RPi.GPIO as GPIO
+import sys
 import time
-print('Changes made to Auto_Loader_Base_Logic.py 2')
-# Set the GPIO mode to BCM
-GPIO.setmode(GPIO.BCM)
 
-# Set up GPIO pin 17 as an output
-GPIO.setup(17, GPIO.OUT)
+ACTIVATION_DELAY = 30 # Delay between sensor detectioon need for plastic and filling action
+EXTRA_FILL_TIME = 5  # seconds to wait after sensor triggers
+TIMEOUT = 30         # seconds
 
-while True:
-    GPIO.output(17, GPIO.HIGH)  # Turn on
-    print('Output is HIGH')
-    time.sleep(5)
-    GPIO.output(17, GPIO.LOW)   # Turn off
-    print('Output is LOW')
-    time.sleep(5)
+
+def read_cap_sensor():
+    # Replace with actual sensor reading logic
+    return # sensor state  
+
+def send_error_to_ui(message):
+    # Replace with actual UI error handling
+    print(f"ERROR: {message}")
+
+start_time = time.time()
+cap_sensor_triggered = False
+
+while time.time() - start_time < TIMEOUT:
+    if read_cap_sensor():
+        cap_sensor_triggered = True
+        break
+    time.sleep(0.1)  # Polling delay
+
+if cap_sensor_triggered:
+    time.sleep(EXTRA_FILL_TIME)
+    # Turn relay off
+else:
+    # Timeout: turn relay off
+    send_error_to_ui("Auto Loader Malfunction!")
+    print("Auto Loader Malfunction!")
