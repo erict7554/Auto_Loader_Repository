@@ -2,9 +2,9 @@ import time
 import requests
 import sys
 
-ACTIVATION_DELAY = 30  # Delay between sensor detectioon need for plastic and filling action
+ACTIVATION_DELAY = 10  # Delay between sensor detectioon need for plastic and filling action
 EXTRA_FILL_TIME = 2 #  seconds to wait after sensor triggers
-TIMEOUT = 60 # time until eductor turns off if no sensor trigger
+TIMEOUT = 30 # time until eductor turns off if no sensor trigger
 
 url_capSense = 'http://localhost/printer/objects/query?gcode_button%20cap_sense'
 url_relay_on = "http://localhost/printer/gcode/script?script=relay_switch_on"
