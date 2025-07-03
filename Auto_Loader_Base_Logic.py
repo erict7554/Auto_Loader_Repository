@@ -6,9 +6,9 @@ ACTIVATION_DELAY = 10  # Delay between sensor detectioon need for plastic and fi
 EXTRA_FILL_TIME = 2 #  seconds to wait after sensor triggers
 TIMEOUT = 30 # time until eductor turns off if no sensor trigger
 
-url_capSense = 'http://localhost/printer/objects/query?gcode_button%20cap_sense'
-url_relay_on = "http://localhost/printer/gcode/script?script=relay_switch_on"
-url_relay_off = "http://localhost/printer/gcode/script?script=relay_switch_off" 
+url_capSense = 'http://192.168.1.68/printer/objects/query?gcode_button%20cap_sense'
+url_relay_on = "http://192.168.1.68/printer/gcode/script?script=relay_switch_on"
+url_relay_off = "http://192.168.1.68/printer/gcode/script?script=relay_switch_off" 
 
 def read_cap_sensor():
     contents = requests.get(url_capSense)
