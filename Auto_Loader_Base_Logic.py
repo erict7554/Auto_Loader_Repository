@@ -32,8 +32,8 @@ def post_gcode(url_input):
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
 
-previous_fill_time = 0
 activation_spacing = ACTIVATION_DELAY + EXTRA_FILL_TIME + 10  # Adding a buffer to ensure the sensor is not triggered too frequently
+previous_fill_time = -activation_spacing  # Initialize to a negative value to ensure the first fill can occur immediately
 
 while True:
     [needy, read_time] = read_cap_sensor()
