@@ -2,9 +2,9 @@ import time
 import requests
 import sys
 
-ACTIVATION_DELAY = sys.argv[1] # Delay between sensor detectioon need for plastic and filling action
-EXTRA_FILL_TIME = sys.argv[2] # seconds to wait after sensor triggers
-TIMEOUT = sys.argv[3] # time until eductor turns off if no sensor trigger
+ACTIVATION_DELAY = 30  # Delay between sensor detectioon need for plastic and filling action
+EXTRA_FILL_TIME = 2 #  seconds to wait after sensor triggers
+TIMEOUT = 60 # time until eductor turns off if no sensor trigger
 
 url_capSense = 'http://192.168.1.68/printer/objects/query?gcode_button%20cap_sense'
 url_relay_on = "http://192.168.1.68/printer/gcode/script?script=relay_switch_on"
@@ -33,11 +33,11 @@ def post_gcode(url_input):
         print(f"Error: {e}")
 
 previous_fill_time = 0
-activation_spacing = ACTIVATION_DELAY + EXTRA_FILL_TIME + 10
+activation_spacing = ACTIVATION_DELAY + EXTRA_FILL_TIME + 10  # Adding a buffer to ensure the sensor is not triggered too frequently
 
 while True:
     [needy, read_time] = read_cap_sensor()
-    if needy == True & (read_time - previous_fill_time) >= activation_spacing:
+    if needy == True and (read_time - previous_fill_time) >= activation_spacing:
             previous_fill_time = read_time
             filled = False
             time.sleep(ACTIVATION_DELAY)
