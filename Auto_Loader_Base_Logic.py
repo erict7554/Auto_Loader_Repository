@@ -2,9 +2,18 @@ import time
 import requests
 import sys
 
-ACTIVATION_DELAY = sys.argv[1] # Delay between sensor detectioon need for plastic and filling action
-EXTRA_FILL_TIME = sys.argv[2] # seconds to wait after sensor triggers
-TIMEOUT = sys.argv[3] # time until eductor turns off if no sensor trigger
+try:
+    ACTIVATION_DELAY = int(sys.argv[1])
+    EXTRA_FILL_TIME = int(sys.argv[2])
+    TIMEOUT = int(sys.argv[3])
+except (IndexError, ValueError):
+    # Handle cases where arguments are missing or not valid integers
+    print("Usage: python Auto_Loader_Base_Logic.py <activation_delay> <extra_fill_time> <timeout>")
+    # Set default values or exit if arguments are critical
+    ACTIVATION_DELAY = 10
+    EXTRA_FILL_TIME = 2
+    TIMEOUT = 30
+    print(f"Using default values: ACTIVATION_DELAY={ACTIVATION_DELAY}, EXTRA_FILL_TIME={EXTRA_FILL_TIME}, TIMEOUT={TIMEOUT}")
 
 url_capSense = 'http://192.168.1.68/printer/objects/query?gcode_button%20cap_sense'
 url_relay_on = "http://192.168.1.68/printer/gcode/script?script=relay_switch_on"
