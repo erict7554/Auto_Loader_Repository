@@ -1,15 +1,10 @@
 #!/bin/bash
 
-# $1 will contain the single string of space-separated parameters
-# Use 'read -r -a' to split this string into an array called params_array
-read -r -a params_array <<< "$1"
+local ACTIVATION_DELAY = $1
+local EXTRA_FILL_TIME = $2
+local TIMEOUT = $3
 
-# Assign individual parameters from the array
-ACTIVATION_DELAY=${params_array[0]}
-EXTRA_FILL_TIME=${params_array[1]}
-TIMEOUT=${params_array[2]}
-
-# (Optional) For debugging, print the received parameters
+# For debugging, print the received parameters
 echo "Received parameters: ACTIVATION_DELAY=${ACTIVATION_DELAY}, EXTRA_FILL_TIME=${EXTRA_FILL_TIME}, TIMEOUT=${TIMEOUT}"
 
 # Kill any existing instances of the script (optional, but good for reliable restarts)
