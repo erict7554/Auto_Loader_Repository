@@ -16,9 +16,9 @@ except (IndexError, ValueError):
     TIMEOUT = 30
     print(f"Using default values: ACTIVATION_DELAY={ACTIVATION_DELAY}, EXTRA_FILL_TIME={EXTRA_FILL_TIME}, TIMEOUT={TIMEOUT}")
 
-url_capSense = 'http://192.168.1.68/printer/objects/query?gcode_button%20cap_sense'
-url_relay_on = "http://192.168.1.68/printer/gcode/script?script=relay_switch_on"
-url_relay_off = "http://192.168.1.68/printer/gcode/script?script=relay_switch_off" 
+url_capSense = 'http://192.168.1.67/printer/objects/query?gcode_button%20cap_sense'
+url_relay_on = "http://192.168.1.67/printer/gcode/script?script=relay_switch_on"
+url_relay_off = "http://192.168.1.67/printer/gcode/script?script=relay_switch_off" 
 
 def read_cap_sensor():
     contents = requests.get(url_capSense)
