@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 PID=$(pgrep -f Auto_Loader_Base_Logic.py)
 
 if [ -z "$PID" ]; then

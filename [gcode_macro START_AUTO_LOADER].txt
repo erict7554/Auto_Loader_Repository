@@ -1,0 +1,8 @@
+[gcode_macro START_AUTO_LOADER]
+description: Starts the Auto Loader script with custom parameters
+gcode:
+    {% set activation_delay = params.ACTIVATION_DELAY|default(10)|int %}
+    {% set extra_fill_time = params.EXTRA_FILL_TIME|default(2)|int %}
+    {% set timeout = params.TIMEOUT|default(30)|int %}
+
+    RUN_SHELL_COMMAND CMD="~/printer_data/config/auto_loader_start.sh {activation_delay} {extra_fill_time} {timeout}"
