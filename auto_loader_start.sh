@@ -1,8 +1,8 @@
 #!/bin/bash
 
-local ACTIVATION_DELAY = $1
-local EXTRA_FILL_TIME = $2
-local TIMEOUT = $3
+ACTIVATION_DELAY = $1
+EXTRA_FILL_TIME = $2
+TIMEOUT = $3
 
 # For debugging, print the received parameters
 echo "Received parameters: ACTIVATION_DELAY=${ACTIVATION_DELAY}, EXTRA_FILL_TIME=${EXTRA_FILL_TIME}, TIMEOUT=${TIMEOUT}"
