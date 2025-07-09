@@ -1,9 +1,5 @@
 #!/bin/bash
 
-ACTIVATION_DELAY=$1
-EXTRA_FILL_TIME=$2
-TIMEOUT=$3
-
 # For debugging, print the received parameters
 echo "Received parameters: ACTIVATION_DELAY=$1, EXTRA_FILL_TIME=$2, TIMEOUT=$3"
 
