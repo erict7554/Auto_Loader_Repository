@@ -6,6 +6,7 @@ try:
     ACTIVATION_DELAY = int(sys.argv[1])
     EXTRA_FILL_TIME = int(sys.argv[2])
     TIMEOUT = int(sys.argv[3])
+    print(f"Using provided values: ACTIVATION_DELAY={ACTIVATION_DELAY}, EXTRA_FILL_TIME={EXTRA_FILL_TIME}, TIMEOUT={TIMEOUT}")
 except (IndexError, ValueError):
     # Handle cases where arguments are missing or not valid integers
     print("Usage: python Auto_Loader_Base_Logic.py <activation_delay> <extra_fill_time> <timeout>")
@@ -47,6 +48,7 @@ previous_fill_time = -activation_spacing  # Initialize to a negative value to en
 while True:
     [needy, read_time] = read_cap_sensor()
     if needy == True and (read_time - previous_fill_time) >= activation_spacing:
+            print("Filling needed, activating relay...")
             previous_fill_time = read_time
             filled = False
             time.sleep(ACTIVATION_DELAY)
