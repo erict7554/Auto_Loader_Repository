@@ -68,6 +68,7 @@ while True:
                 post_gcode(url_relay_off) 
                 send_error_to_ui("Auto Loader Malfunction!")
                 print("Auto Loader Malfunction!")
+                sys.exit(1)
         
     time.sleep(0.250)  # Polling delay
     
