@@ -1,0 +1,25 @@
+[Unit]
+Description=Auto Loader Base Logic Service (Delay=%i)
+After=network.target
+
+[Service]
+User=pi
+Group=pi
+
+# Split the instance name into parameters using bash
+# %i is the part after the @ in the service name (e.g., 10:2:30)
+ExecStart=/bin/bash -c '/usr/bin/python /home/pi/klipper/Auto_Loader_Repository/Auto_Loader_Base_Logic_ws.py ${INSTANCE_ARGS//:/ }'
+
+# Pass instance name into the bash variable
+Environment=INSTANCE_ARGS=%i
+
+Environment=PYTHONUNBUFFERED=1
+WorkingDirectory=/home/pi/klipper/Auto_Loader_Repository
+
+Restart=no
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
