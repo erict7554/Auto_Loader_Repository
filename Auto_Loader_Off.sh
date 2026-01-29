@@ -1,10 +1,10 @@
 #!/bin/bash
 
-PID=$(pgrep -f Auto_Loader_Base_Logic.py)
+PID=$(pgrep -f rpi_albl.py)
 
 if [ -z "$PID" ]; then
-    echo "No running instance of Auto_Loader_Base_Logic.py found."
+    echo "No running instance of rpi_albl.py found."
 else
     kill "$PID"
-    echo "Stopped Auto_Loader_Base_Logic.py with PID $PID."
+    echo "Stopped rpi_albl.py with PID $PID."
 fi
