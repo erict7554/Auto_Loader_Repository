@@ -3,7 +3,7 @@ import sys
 import RPi.GPIO as GPIO
 
 CAP_SENSOR_PIN = 17   # GPIO pin for capacitive sensor
-RELAY_PIN = 27        # GPIO pin for relay
+RELAY_PIN = 18        # GPIO pin for relay
 
 RELAY_ON = True
 RELAY_OFF = False
@@ -102,7 +102,3 @@ finally:
     relay(RELAY_OFF)   # fail-safe: valve closed
     GPIO.cleanup()
     print("GPIO cleaned up")
-    
-        
-
-    
