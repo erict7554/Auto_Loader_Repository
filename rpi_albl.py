@@ -1,6 +1,6 @@
 import time
 import sys
-import RPi.GPIO as GPIO
+import lgpio as GPIO
 
 CAP_SENSOR_PIN = 17   # GPIO pin for capacitive sensor
 RELAY_PIN = 18        # GPIO pin for relay
