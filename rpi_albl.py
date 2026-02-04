@@ -1,18 +1,12 @@
 import time
 import sys
-import lgpio as GPIO
+from gpiozero import DigitalInputDevice, DigitalOutputDevice
 
 CAP_SENSOR_PIN = 17   # GPIO pin for capacitive sensor
 RELAY_PIN = 18        # GPIO pin for relay
 
-RELAY_ON = True
-RELAY_OFF = False
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(CAP_SENSOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(RELAY_PIN, GPIO.OUT)
-
-GPIO.output(RELAY_PIN, GPIO.LOW)  # ensure relay off at startup
+cap_sensor = DigitalInputDevice(CAP_SENSOR_PIN, pull_up=True)
+relay = DigitalOutputDevice(RELAY_PIN, active_high=True, initial_value=False)
 
 try:
     ACTIVATION_DELAY = int(sys.argv[1])
@@ -29,37 +23,19 @@ except (IndexError, ValueError):
     print(f"Using default values: ACTIVATION_DELAY={ACTIVATION_DELAY}, EXTRA_FILL_TIME={EXTRA_FILL_TIME}, TIMEOUT={TIMEOUT}")
 
 def read_cap_sensor():
-    """
-    Reads capacitive sensor state.
-    Returns:
-        needy (bool): True if fill is needed
-        read_time (float): current timestamp
-    """
-    sensor_state = GPIO.input(CAP_SENSOR_PIN)
-
-    # Adjust logic if your sensor is inverted
-    # Here: LOW = material present, HIGH = empty
-    needy = sensor_state == GPIO.HIGH
-
-    read_time = time.time()
-    return needy, read_time
+    needy = cap_sensor.value  # True = HIGH
+    return needy, time.time()
 
 def send_error_to_ui(message):
     print(f"ERROR: {message}")
      
-def relay(command):
-    """
-    Controls relay state.
-    command: RELAY_ON or RELAY_OFF
-    """
-    if command == RELAY_ON:
-        GPIO.output(RELAY_PIN, GPIO.HIGH)
-        print("Relay ON")
-    elif command == RELAY_OFF:
-        GPIO.output(RELAY_PIN, GPIO.LOW)
-        print("Relay OFF")
-    else:
-        raise ValueError("Invalid relay command")
+def relay_on():
+    relay.on()
+    print("Relay ON")
+
+def relay_off():
+    relay.off()
+    print("Relay OFF")
 
 activation_spacing = ACTIVATION_DELAY + EXTRA_FILL_TIME + 10  # Adding a buffer to ensure the sensor is not triggered too frequently
 previous_fill_time = -activation_spacing  # Initialize to a negative value to ensure the first fill can occur immediately
@@ -74,7 +50,7 @@ try:
             filled = False
 
             time.sleep(ACTIVATION_DELAY)
-            relay(RELAY_ON)
+            relay_on()
 
             start_time = time.time()
             while time.time() - start_time < TIMEOUT:
@@ -86,9 +62,9 @@ try:
 
             if filled:
                 time.sleep(EXTRA_FILL_TIME)
-                relay(RELAY_OFF)
+                relay_off()
             else:
-                relay(RELAY_OFF)
+                relay_off()
                 send_error_to_ui("Auto Loader Malfunction!")
                 print("Auto Loader Malfunction!")
                 sys.exit(1)
@@ -99,6 +75,6 @@ except KeyboardInterrupt:
     print("Program interrupted by user")
 
 finally:
-    relay(RELAY_OFF)   # fail-safe: valve closed
-    GPIO.cleanup()
-    print("GPIO cleaned up")
+    relay_off()          # fail-safe: valve closed
+    relay.close()
+    cap_sensor.close()
