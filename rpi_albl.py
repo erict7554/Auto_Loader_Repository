@@ -5,7 +5,7 @@ from gpiozero import DigitalInputDevice, DigitalOutputDevice
 CAP_SENSOR_PIN = 17   # GPIO pin for capacitive sensor
 RELAY_PIN = 18        # GPIO pin for relay
 
-cap_sensor = DigitalInputDevice(CAP_SENSOR_PIN, pull_up=True)
+cap_sensor = DigitalInputDevice(CAP_SENSOR_PIN, pull_up=False)
 relay = DigitalOutputDevice(RELAY_PIN, active_high=True, initial_value=False)
 
 try:
