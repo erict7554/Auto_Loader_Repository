@@ -9,6 +9,6 @@ pkill -f "rpi_albl.py"
 # Start your Python program with the parsed parameters
 # Ensure the absolute path to your Python script is correct
 
-sudo python -u /home/pi/klipper/auto_loader/rpi_albl.py "$1" "$2" "$3" &
+sudo python /home/pi/klipper/auto_loader/rpi_albl.py "$1" "$2" "$3" &
 
 exit 0
